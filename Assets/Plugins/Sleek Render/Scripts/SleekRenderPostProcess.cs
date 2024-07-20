@@ -7,7 +7,7 @@ namespace SleekRender
     // Custom component editor view definition
     [AddComponentMenu("Effects/Sleek Render Post Process")]
     [RequireComponent(typeof(Camera))]
-    [ExecuteInEditMode, DisallowMultipleComponent]
+    [ExecuteInEditMode]
     public class SleekRenderPostProcess : MonoBehaviour
     {
         public static class Uniforms
