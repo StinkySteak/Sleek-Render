@@ -1,0 +1,11 @@
+{
+  "name": "com.stinkysteak.sleek-render",
+  "version": "0.1.0",
+  "displayName": "Sleek Render",
+  "description": "Alternative to Post Processing Stack V2",
+  "author": {
+    "name": "Stinkysteak",
+    "email": "stinkysteak@steaksoft.com",
+    "url": "https://steaksoft.net"
+  }
+}
