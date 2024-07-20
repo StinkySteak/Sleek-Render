@@ -70,9 +70,6 @@ namespace SleekRender
 
         private void OnEnable()
         {
-            // If we are adding a component from scratch, we should supply fake settings with default values 
-            // (until normal ones are linked)
-            CreateDefaultSettingsIfNoneLinked();
             CreateResources();
         }
 
@@ -100,9 +97,10 @@ namespace SleekRender
 
         private void OnRenderImage(RenderTexture source, RenderTexture target)
         {
+            if (settings == null) return;
+
             // Editor only behaviour needed to recreate resources if viewport size changes (resizing editor window)
 #if UNITY_EDITOR
-            CreateDefaultSettingsIfNoneLinked();
             CheckScreenSizeAndRecreateTexturesIfNeeded(_mainCamera);
 #endif
             // Applying post processing steps
@@ -174,7 +172,7 @@ namespace SleekRender
                 var vignetteColor = settings.vignetteColor;
 
                 _preComposeMaterial.SetVector(Uniforms._VignetteShape, new Vector4(
-                    4f * oneOverVignetteRadiusDistance * oneOverVignetteRadiusDistance, 
+                    4f * oneOverVignetteRadiusDistance * oneOverVignetteRadiusDistance,
                     -oneOverVignetteRadiusDistance * squareVignetteBeginRaduis));
 
                 // Premultiplying Alpha of vignette color
@@ -427,15 +425,6 @@ namespace SleekRender
         {
             const float SQUARE_ASPECT_CORRECTION = 0.7f;
             return mainCamera.aspect * SQUARE_ASPECT_CORRECTION;
-        }
-
-        private void CreateDefaultSettingsIfNoneLinked()
-        {
-            if (settings == null)
-            {
-                settings = ScriptableObject.CreateInstance<SleekRenderSettings>();
-                settings.name = "Default Settings";
-            }
         }
 
         private Mesh CreateScreenSpaceQuadMesh()
